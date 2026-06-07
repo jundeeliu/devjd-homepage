@@ -1,152 +1,411 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevJD | 高性能企业级全栈产品矩阵</title>
+    <title>DevJD Labs | 高性能企业级全栈系统研发</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131a26;
-            --card-border: #222f43;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --accent: #10b981;
+        /* 隐藏滚动条 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            line-height: 1.7; 
-            padding: 60px 20px;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
-        }
-        .container { max-width: 900px; margin: 0 auto; }
-        
-        /* Header */
-        header { margin-bottom: 70px; text-align: center; }
-        h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 12px; background: linear-gradient(to right, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; }
-
-        /* Grid Section */
-        .section-title { font-size: 1.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #60a5fa; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--card-border), transparent); }
-        .card-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; }
-        
-        /* Card Style */
-        .card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
-        .card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5); }
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-        .card-title { font-size: 1.4rem; font-weight: 700; color: #ffffff; }
-        
-        /* Badges */
-        .badge { font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 9999px; background-color: #1f293d; color: var(--text-muted); border: 1px solid var(--card-border); }
-        .badge.active { background-color: rgba(59, 130, 246, 0.1); color: #60a5fa; border-color: rgba(59, 130, 246, 0.2); }
-        .badge.success { background-color: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.2); }
-        
-        .card-desc { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; }
-        
-        /* Buttons */
-        .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; }
-        .btn-primary { background-color: var(--primary); color: #ffffff; }
-        .btn-primary:hover { background-color: var(--primary-hover); }
-        .btn-secondary { background-color: #1e293b; color: var(--text-main); border: 1px solid var(--card-border); }
-        .btn-secondary:hover { background-color: #2d3748; border-color: #4b5563; }
-
-        /* Studio Statement */
-        .statement-box { background: linear-gradient(135deg, #111827, #131a26); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px; }
-        .statement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 16px; }
-        .statement-item h4 { font-size: 1rem; color: #ffffff; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .statement-item p { font-size: 0.9rem; color: var(--text-muted); }
-
-        footer { margin-top: 80px; text-align: center; color: #4b5563; font-size: 0.85rem; border-top: 1px solid #111827; padding-top: 24px; }
-        
-        @media (max-width: 640px) {
-            body { padding: 40px 16px; }
-            h1 { font-size: 2.2rem; }
-            .card { padding: 24px; }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>DevJD Labs</h1>
-            <p class="subtitle">面向高效开发与垂直行业的数字化完整解决方案</p>
+<body class="bg-white text-slate-800 antialiased font-sans relative min-h-screen">
+
+    <!-- 顶部极光微光背景（高雅淡蓝色洗水效果） -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-blue-100/30 via-indigo-50/10 to-transparent blur-[100px] pointer-events-none -z-10"></div>
+
+    <!-- 导航栏 -->
+    <nav class="sticky top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 z-40 transition-all duration-300">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- 极简 Logo -->
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md shadow-blue-600/15 text-sm">
+                    JD
+                </div>
+                <span class="text-base font-bold tracking-tight bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text text-transparent">DevJD Labs</span>
+            </div>
+            <div class="flex items-center gap-6 text-xs md:text-sm font-medium text-slate-600">
+                <a href="#products" class="hover:text-blue-600 transition-colors">产品矩阵</a>
+                <a href="#cooperate" class="hover:text-blue-600 transition-colors">合作共识</a>
+                <button onclick="openContactModal()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all text-xs font-semibold shadow-sm shadow-blue-600/10">
+                    即刻联络
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主体容器 -->
+    <div class="max-w-3xl mx-auto px-6 pt-16 pb-24">
+        
+        <!-- Hero 头部区域 -->
+        <header class="text-center mb-16 animate-fade-in">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[11px] text-blue-600 font-medium mb-6">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                2026 垂直行业管理应用生态发布
+            </div>
+            <h1 class="text-2.5xl md:text-3xl font-extrabold tracking-tight text-slate-900 mb-4 leading-tight">
+                高性能通用研发底座与数字化应用交付
+            </h1>
+            <p class="text-sm md:text-base text-slate-500 max-w-lg mx-auto leading-relaxed">
+                专注于核心高频痛点的精细化重构，提供轻量、开箱即用的解决方案。我们坚信私有化部署的自控价值，致力于帮助伙伴保障数据资产的长期安全。
+            </p>
         </header>
 
-        <main>
-            <section>
-                <div class="section-title">产品与服务矩阵</div>
-                <div class="card-list">
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">RuoYi-Vue 深度优化脚手架</div>
-                            <span class="badge active">开源生态品</span>
-                        </div>
-                        <p class="card-desc">针对企业垂直落地、高频业务痛点重构的若依加强版。精简冗余组件、深度优化首屏加载，补齐常见业务模块短板。不仅可直接用于高效接单与企业二开，更是本实验室所有商业系统的底层底座。</p>
-                        <div class="btn-group">
-                            <a href="https://gitee.com" class="btn btn-primary" target="_blank">Gitee 开源仓库</a>
-                            <a href="#" class="btn btn-secondary">获取 Pro 商业版补丁包</a>
+        <!-- 产品矩阵板块 -->
+        <section id="products" class="mb-16 scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <h2 class="text-sm font-bold text-slate-800 tracking-wider">核心研发与应用矩阵</h2>
+                <div class="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent"></div>
+            </div>
+
+            <div class="space-y-6">
+                
+                <!-- 1. 外贸管理系统 -->
+                <div class="group bg-slate-50/50 border border-slate-100/80 rounded-xl p-6 md:p-8 hover:bg-white hover:border-blue-500/20 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300">
+                    <div class="flex justify-between items-start gap-4 mb-3 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">外贸管理系统 (Maodas 贸达思)</h3>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-600 border border-blue-100">旗舰方案</span>
                         </div>
                     </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">贸达思 (Maodas) 跨境贸易系统</div>
-                            <span class="badge success">旗舰商用</span>
-                        </div>
-                        <p class="card-desc">专为中小企业与 SOHO 跨境贸易打造的一体化管理系统。开箱即用，深度集成订单履约跟踪、Sales Order 敏捷生成及全链条海外邮件追踪。坚持私有化部署底座，确保企业数据主权 100% 绝对自主。</p>
-                        <div class="btn-group">
-                            <a href="https://demo.devjd.com" class="btn btn-primary" target="_blank">系统在线演示</a>
-                            <a href="#" class="btn btn-secondary">私有化落地部署咨询</a>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">WA 助手 (WAPlus) 生产力扩展</div>
-                            <span class="badge">效率工具</span>
-                        </div>
-                        <p class="card-desc">基于 Vue 3 + Express 架构的轻量级 WhatsApp 浏览器增强插件。拒绝盲目营销，专注于跨境客户状态的精准实时监控与高效留存，商户降维打击的私域留存利器。</p>
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-secondary" style="opacity: 0.6; pointer-events: none;">内测筹备中...</a>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <section>
-                <div class="section-title">关于我们 & 合作说明</div>
-                <div class="statement-box">
-                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 500;">为保障产品的高频迭代与现有商业客户的交付质量，本实验室严格遵循以下协同机制：</p>
-                    <div class="statement-grid">
-                        <div class="statement-item">
-                            <h4>⚡ 自动化产品交付</h4>
-                            <p>所有技术底座与 Pro 版补丁均采用全自动自助发货机制，文档详尽，拒绝时间碎片化消耗。</p>
-                        </div>
-                        <div class="statement-item">
-                            <h4>🛑 不承接定制外包</h4>
-                            <p>我们保持极度克制的精力和聚焦，不接受任何形式的 1V1 劳务外包与雇佣化定制开发。</p>
-                        </div>
-                        <div class="statement-item">
-                            <h4>💼 商业授权与合作</h4>
-                            <p>如有系统架构级商业采购、特定行业解决方案落地或代理合作，欢迎联系：<span>contact@devjd.com</span></p>
-                        </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        专为中小企业和跨境团队研发的自托管业务系统。深度打通订单全生命周期履约、Sales Order 敏捷生成及全链条海外邮件交互，彻底阻断第三方服务商数据审查及流失风险。
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openProductDetail('maodas')" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm shadow-blue-600/10 transition-all">
+                            申请演示环境测试
+                        </button>
+                        <button onclick="openProductDetail('maodas_deploy')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200/50 transition-all">
+                            私有化部署详情
+                        </button>
                     </div>
                 </div>
-            </section>
-        </main>
 
-        <footer>
-            <p>&copy; 2026 DevJD Labs. All Rights Reserved.</p>
+                <!-- 2. 工程项目管理系统 -->
+                <div class="group bg-slate-50/50 border border-slate-100/80 rounded-xl p-6 md:p-8 hover:bg-white hover:border-blue-500/20 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300">
+                    <div class="flex justify-between items-start gap-4 mb-3 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">工程项目管理系统</h3>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100">精细管理</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        涵盖工程项目里程碑追踪、预算及合同审计、物料全生命周期流转、分包商款项拨付等。通过模块化流程引擎保障施工节点高保真记录，全面预防工程逾期与成本超支。
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openProductDetail('engineering')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200/50 transition-all">
+                            功能架构说明
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. 教务管理系统 -->
+                <div class="group bg-slate-50/50 border border-slate-100/80 rounded-xl p-6 md:p-8 hover:bg-white hover:border-blue-500/20 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300">
+                    <div class="flex justify-between items-start gap-4 mb-3 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">教务管理系统</h3>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-100">智能调度</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        内置先进的多维排课冲突校验算法，涵盖教职工档案排期、多教学点统筹分流、学员签到消课及课时清算。大幅度压缩人工排课工时，消灭课程重叠与资源闲置。
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openProductDetail('education')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200/50 transition-all">
+                            调度算法解析
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. 助贷金融管理系统 -->
+                <div class="group bg-slate-50/50 border border-slate-100/80 rounded-xl p-6 md:p-8 hover:bg-white hover:border-blue-500/20 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300">
+                    <div class="flex justify-between items-start gap-4 mb-3 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">助贷金融管理系统</h3>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-rose-50 text-rose-600 border border-rose-100">合规风控</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        专门面向金融助贷中介设计的全流程管理。实现多渠道线索自动分发、智能风控初审筛选、资方利息方案匹配，以及全链路防泄漏的信息物理脱敏，符合行业最高合规要求。
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openProductDetail('loan')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200/50 transition-all">
+                            风控链路规范
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. 验货宝（贸易方向）管理工具 -->
+                <div class="group bg-slate-50/50 border border-slate-100/80 rounded-xl p-6 md:p-8 hover:bg-white hover:border-blue-500/20 hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-300">
+                    <div class="flex justify-between items-start gap-4 mb-3 flex-wrap">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">验货宝管理工具</h3>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-600 border border-amber-100">轻量提效</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        针对跨国大宗贸易及快消品出海打造的现场质检管理。支持移动端现场录入质量缺陷数据、离线暂存防弱网崩溃、现场图片自动化高保真压缩，并一键渲染符合国际商规标准的 PDF 质检报告。
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="openProductDetail('yanhuabao')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200/50 transition-all">
+                            质检范本标准
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 服务指南与机制说明 -->
+        <section id="cooperate" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+                <h2 class="text-sm font-bold text-slate-800 tracking-wider">支持与商业服务共识</h2>
+                <div class="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent"></div>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-100 rounded-xl p-6 md:p-8 space-y-6">
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    为保障核心底层算法的高频迭代与现有商业伙伴的高标准高可用交付，我们制定了极具诚意的良性业务沟通机制：
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            系统交付标准
+                        </h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            所有的行业级系统均配备完善的一键私有化部署向导、数据库初始化脚本及后续的安全漏洞定期修补补丁包。
+                        </p>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            开源共享共建
+                        </h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            我们的通用脚手架优化补丁持续更新中。在实际跑通中若遇到基础缺陷或配置问题，推荐随时至对应 Git 平台建立 Issue。
+                        </p>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            深度商业联络
+                        </h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            针对任何中大型企业系统的完整私有部署采购、定制化解决方案探讨或长期分销代理合作，可邮件咨询沟通。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-slate-200/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="text-xs text-slate-500">
+                        商业联络邮箱：<span class="text-slate-900 font-semibold select-all">jundeeliu@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="copyEmailToClipboard()" class="px-3.5 py-1.5 bg-slate-200/80 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition-all">
+                            复制邮箱地址
+                        </button>
+                        <button onclick="openContactModal()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm shadow-blue-600/10 transition-all">
+                            即刻在线咨询
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底部版权 -->
+        <footer class="mt-16 pt-8 border-t border-slate-100 text-center text-xs text-slate-400">
+            <p>&copy; 2026 DevJD Labs. 保留所有权利。</p>
         </footer>
     </div>
+
+    <!-- 全局提示弹窗 (Modal) -->
+    <div id="contactModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl relative transform translate-y-4 transition-all duration-300" id="modalBox">
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors">
+                <!-- Close Icon SVG -->
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            
+            <h3 class="text-base font-bold text-slate-900 mb-3" id="modalTitle">获取商业解决方案</h3>
+            <div class="text-sm text-slate-600 space-y-4" id="modalContent">
+                <p>我们非常乐意为您提供详尽的支持。请通过官方商业信箱建立联络：</p>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                    <span class="text-blue-600 font-mono text-sm font-semibold select-all">jundeeliu@gmail.com</span>
+                    <button onclick="copyEmailFromModal('jundeeliu@gmail.com')" class="text-xs font-bold text-slate-600 hover:text-slate-800 transition-all bg-slate-200/80 hover:bg-slate-200 px-3 py-1.5 rounded-md">复制</button>
+                </div>
+                <p class="text-xs text-slate-400">
+                    * 来信请说明您的基本业务诉求与业务场景（我们将在收到邮件后的一个工作日内进行回复，与您高效对接）。
+                </p>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeContactModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition-all">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 轻量全局 Toast 通知 -->
+    <div id="toast" class="fixed bottom-6 right-6 px-4 py-3 bg-white border border-emerald-200 text-emerald-600 rounded-xl text-xs font-semibold shadow-xl shadow-slate-200/40 flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <!-- Toast Check Icon -->
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+        <span id="toastText">邮箱已成功复制到剪切板</span>
+    </div>
+
+    <!-- 业务逻辑 JavaScript -->
+    <script>
+        // 1. 自定义弹窗逻辑
+        function openContactModal() {
+            const modal = document.getElementById('contactModal');
+            const box = document.getElementById('modalBox');
+            
+            document.getElementById('modalTitle').innerText = "获取商业解决方案";
+            document.getElementById('modalContent').innerHTML = `
+                <p>我们非常乐意为您提供高可用私有化部署、技术架构演进等全流程业务服务。请通过官方联络信箱与我们取得联系：</p>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center my-3">
+                    <span class="text-blue-600 font-mono text-sm font-semibold select-all">jundeeliu@gmail.com</span>
+                    <button onclick="copyEmailFromModal('jundeeliu@gmail.com')" class="text-xs font-bold text-slate-600 hover:text-slate-800 transition-all bg-slate-200/80 hover:bg-slate-200 px-3 py-1.5 rounded-md">复制</button>
+                </div>
+                <p class="text-xs text-slate-400">
+                    * 来信请说明您的基本业务诉求与业务场景（如：系统底座采购、垂直行业自托管评估等），我们将在收到邮件后的一个工作日内与您回复对接。
+                </p>
+            `;
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            box.classList.remove('translate-y-4');
+        }
+
+        function openProductDetail(type) {
+            const modal = document.getElementById('contactModal');
+            const box = document.getElementById('modalBox');
+            
+            if (type === 'maodas') {
+                document.getElementById('modalTitle').innerText = "贸达思 (Maodas) 系统测试环境申请";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-3 leading-relaxed">我们为潜在企业伙伴与跨境团队提供完整的 Maodas 闭环演示测试环境，供您进行全局功能及流转效益评估。</p>
+                    <p class="text-xs text-slate-500 mb-3 leading-relaxed">
+                        由于涉及真实邮件交互节点及敏感的销售订单模块逻辑，请发信至 <b class="text-blue-600">jundeeliu@gmail.com</b> 并附上您的主营品类或团队规模，我们将即刻为您分发专属的测试账密。
+                    </p>
+                `;
+            } else if (type === 'maodas_deploy') {
+                document.getElementById('modalTitle').innerText = "贸达思 (Maodas) 极简自托管详情";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-2 leading-relaxed">贸达思支持完全隔离、免大厂公有云订阅依赖的本地私有化部署底座：</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 list-disc pl-4 mb-4">
+                        <li><b>物理数据主权：</b> 数据及文件可持久化存放在您所信任的单台 VPS（2核4G即可）或企业内网服务器中。</li>
+                        <li><b>无感一键升级：</b> 提供极为周全的 Shell 一键安装与平滑热升级维护脚本，彻底隔绝运维门槛。</li>
+                    </ul>
+                    <p class="text-xs text-slate-400">获取自建部署方案说明，请随信联络：<b class="text-blue-600">jundeeliu@gmail.com</b></p>
+                `;
+            } else if (type === 'engineering') {
+                document.getElementById('modalTitle').innerText = "工程项目管理系统 架构说明";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-3">系统提供高精准精细化的多工期里程碑协同跟踪：</p>
+                    <ul class="text-xs text-slate-500 space-y-2 list-disc pl-4 mb-4 leading-relaxed">
+                        <li><b>多端联动：</b> 支持现场质检照片及施工节点的一键离线暂存与上传同步。</li>
+                        <li><b>资金链预警：</b> 实时对比工程总承包合同、已结算分包款与实时物料物资出入库开支，深度规避溢支风险。</li>
+                    </ul>
+                    <p class="text-xs text-slate-400">获取定制方案或演示体验，请联系：<b class="text-blue-600">jundeeliu@gmail.com</b></p>
+                `;
+            } else if (type === 'education') {
+                document.getElementById('modalTitle').innerText = "教务管理系统 智能排课算法";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-3 leading-relaxed">依托多维资源调配模型，提供排课冲突的主动检测与智能重规划服务：</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 list-disc pl-4 mb-4 leading-relaxed">
+                        <li><b>智能防冲突：</b> 全自动校验教师排期、教室空间额度与班级课表。</li>
+                        <li><b>消课闭环：</b> 支持多校区统一消课记录审计、课时扣减自动回溯、透明教职工绩效考评。</li>
+                    </ul>
+                    <p class="text-xs text-slate-400">了解核心教务算法白皮书，请联络：<b class="text-blue-600">jundeeliu@gmail.com</b></p>
+                `;
+            } else if (type === 'loan') {
+                document.getElementById('modalTitle').innerText = "助贷金融管理系统 核心合规指标";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-3">系统支持严密的数据安全合规机制与高并发线索分发：</p>
+                    <ul class="text-xs text-slate-500 space-y-1.5 list-disc pl-4 mb-4 leading-relaxed">
+                        <li><b>进件风控：</b> 灵活接入第三方征信 API，对首期线索执行快速风控评分，筛选优质商机。</li>
+                        <li><b>安全降漏：</b> 支持在私有服务器端完成数据的端到端加密、字段级脱敏和高频导出审计追踪。</li>
+                    </ul>
+                    <p class="text-xs text-slate-400">获取系统安全技术细节，请联络：<b class="text-blue-600">jundeeliu@gmail.com</b></p>
+                `;
+            } else if (type === 'yanhuabao') {
+                document.getElementById('modalTitle').innerText = "验货宝（贸易方向）管理应用标准";
+                document.getElementById('modalContent').innerHTML = `
+                    <p class="mb-3">专门针对跨境出海及实体工厂质检场景：</p>
+                    <ul class="text-xs text-slate-500 space-y-2 list-disc pl-4 mb-4 leading-relaxed">
+                        <li><b>极限图片压缩：</b> 高清质检图全自动本地多倍无损压缩，即便在微弱的跨国跨境网络下，亦能顺畅完成秒级上传。</li>
+                        <li><b>一键PDF报告：</b> 支持质检缺陷 AQL 标准自动核算，现场质检数据一键导出符合国际商检形式的 PDF 报告。</li>
+                    </ul>
+                    <p class="text-xs text-slate-400">获取质检报告样例或演示，请随时致信：<b class="text-blue-600">jundeeliu@gmail.com</b></p>
+                `;
+            }
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            box.classList.remove('translate-y-4');
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            const box = document.getElementById('modalBox');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            box.classList.add('translate-y-4');
+        }
+
+        // 2. 邮箱复制及 Toast 提示逻辑 (采用 document.execCommand 避开 iframe 权限限制)
+        function copyEmailToClipboard() {
+            executeCopy("jundeeliu@gmail.com");
+        }
+
+        function copyEmailFromModal(email) {
+            executeCopy(email);
+        }
+
+        function executeCopy(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                showToast("联络邮箱已成功复制到剪切板");
+            } catch (err) {
+                showToast("复制失败，请手动选择复制");
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+    </script>
 </body>
 </html>
