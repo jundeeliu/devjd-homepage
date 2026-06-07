@@ -3,99 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevJD | 俊迪的独立开发工作室</title>
+    <title>DevJD | 高性能企业级全栈产品矩阵</title>
     <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131a26;
+            --card-border: #222f43;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #10b981;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #0f172a; color: #f8fafc; line-height: 1.6; padding: 40px 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        header { margin-bottom: 60px; text-align: center; }
-        h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        .subtitle { color: #94a3b8; font-size: 1.1rem; }
-        .section-title { font-size: 1.4rem; color: #38bdf8; margin-bottom: 20px; border-left: 4px solid #38bdf8; padding-left: 12px; }
-        .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px; transition: border-color 0.3s; }
-        .card:hover { border-color: #4f46e5; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .card-title { font-size: 1.25rem; font-weight: 700; color: #f1f5f9; }
-        .badge { background-color: #334155; color: #94a3b8; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
-        .badge.active { background-color: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
-        .card-desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
-        .btn-group { display: flex; gap: 12px; }
-        .btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; text-decoration: none; text-align: center; }
-        .btn-primary { background-color: #4f46e5; color: #ffffff; }
-        .btn-primary:hover { background-color: #4338ca; }
-        .btn-secondary { background-color: #334155; color: #f1f5f9; }
-        .btn-secondary:hover { background-color: #475569; }
-        .notice-box { background-color: rgba(30, 41, 59, 0.5); border: 1px dashed #475569; border-radius: 12px; padding: 20px; margin-top: 40px; color: #94a3b8; font-size: 0.9rem; }
-        .notice-box ul { margin-left: 20px; margin-top: 8px; }
-        footer { margin-top: 60px; text-align: center; color: #64748b; font-size: 0.85rem; border-top: 1px solid #1e293b; padding-top: 20px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.7; 
+            padding: 60px 20px;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Header */
+        header { margin-bottom: 70px; text-align: center; }
+        h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 12px; background: linear-gradient(to right, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-muted); font-size: 1.15rem; font-weight: 400; }
+
+        /* Grid Section */
+        .section-title { font-size: 1.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #60a5fa; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--card-border), transparent); }
+        .card-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; }
+        
+        /* Card Style */
+        .card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.5); }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+        .card-title { font-size: 1.4rem; font-weight: 700; color: #ffffff; }
+        
+        /* Badges */
+        .badge { font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 9999px; background-color: #1f293d; color: var(--text-muted); border: 1px solid var(--card-border); }
+        .badge.active { background-color: rgba(59, 130, 246, 0.1); color: #60a5fa; border-color: rgba(59, 130, 246, 0.2); }
+        .badge.success { background-color: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.2); }
+        
+        .card-desc { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; }
+        
+        /* Buttons */
+        .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+        .btn-primary { background-color: var(--primary); color: #ffffff; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: #1e293b; color: var(--text-main); border: 1px solid var(--card-border); }
+        .btn-secondary:hover { background-color: #2d3748; border-color: #4b5563; }
+
+        /* Studio Statement */
+        .statement-box { background: linear-gradient(135deg, #111827, #131a26); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px; }
+        .statement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 16px; }
+        .statement-item h4 { font-size: 1rem; color: #ffffff; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .statement-item p { font-size: 0.9rem; color: var(--text-muted); }
+
+        footer { margin-top: 80px; text-align: center; color: #4b5563; font-size: 0.85rem; border-top: 1px solid #111827; padding-top: 24px; }
+        
+        @media (max-width: 640px) {
+            body { padding: 40px 16px; }
+            h1 { font-size: 2.2rem; }
+            .card { padding: 24px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>DevJD</h1>
-            <p class="subtitle">资深全栈工程师 · 俊迪的独立开发工作室</p>
+            <h1>DevJD Labs</h1>
+            <p class="subtitle">面向高效开发与垂直行业的数字化完整解决方案</p>
         </header>
 
         <main>
-            <section style="margin-bottom: 40px;">
-                <h2 class="section-title">产品矩阵 & 数字化资产</h2>
-                
-                <!-- 核心：贸达思 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">贸达思 (Maodas)</div>
-                        <span class="badge active">旗舰产品</span>
+            <section>
+                <div class="section-title">产品与服务矩阵</div>
+                <div class="card-list">
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">RuoYi-Vue 深度优化脚手架</div>
+                            <span class="badge active">开源生态品</span>
+                        </div>
+                        <p class="card-desc">针对企业垂直落地、高频业务痛点重构的若依加强版。精简冗余组件、深度优化首屏加载，补齐常见业务模块短板。不仅可直接用于高效接单与企业二开，更是本实验室所有商业系统的底层底座。</p>
+                        <div class="btn-group">
+                            <a href="https://gitee.com" class="btn btn-primary" target="_blank">Gitee 开源仓库</a>
+                            <a href="#" class="btn btn-secondary">获取 Pro 商业版补丁包</a>
+                        </div>
                     </div>
-                    <p class="card-desc">专为中小企业与 SOHO 跨境贸易打造的一体化管理系统。深度打通订单跟踪、Sales Order 生成及海外邮件追踪。坚持私有化部署底座，将 100% 数据主权完全归还企业。</p>
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-primary">了解详情</a>
-                        <a href="https://demo.devjd.com" class="btn btn-secondary" target="_blank">系统演示</a>
-                    </div>
-                </div>
 
-                <!-- 流量池：若依优化版 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">RuoYi-Vue 深度优化生态版</div>
-                        <span class="badge">开源底座</span>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">贸达思 (Maodas) 跨境贸易系统</div>
+                            <span class="badge success">旗舰商用</span>
+                        </div>
+                        <p class="card-desc">专为中小企业与 SOHO 跨境贸易打造的一体化管理系统。开箱即用，深度集成订单履约跟踪、Sales Order 敏捷生成及全链条海外邮件追踪。坚持私有化部署底座，确保企业数据主权 100% 绝对自主。</p>
+                        <div class="btn-group">
+                            <a href="https://demo.devjd.com" class="btn btn-primary" target="_blank">系统在线演示</a>
+                            <a href="#" class="btn btn-secondary">私有化落地部署咨询</a>
+                        </div>
                     </div>
-                    <p class="card-desc">针对企业级垂直落地、高并发业务场景深度定制的若依加强版。重构核心性能、补齐特定业务短板。作为本工作室所有商用产品（如贸达思）的底层架构底座。</p>
-                    <div class="btn-group">
-                        <a href="https://gitee.com" class="btn btn-primary" target="_blank">Gitee 开源版</a>
-                        <a href="#" class="btn btn-secondary">自助获取 Pro 商业版补丁</a>
-                    </div>
-                </div>
 
-                <!-- 工具：WA助手 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">WA 助手 (WAPlus)</div>
-                        <span class="badge">效率工具</span>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">WA 助手 (WAPlus) 生产力扩展</div>
+                            <span class="badge">效率工具</span>
+                        </div>
+                        <p class="card-desc">基于 Vue 3 + Express 架构的轻量级 WhatsApp 浏览器增强插件。拒绝盲目营销，专注于跨境客户状态的精准实时监控与高效留存，商户降维打击的私域留存利器。</p>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-secondary" style="opacity: 0.6; pointer-events: none;">内测筹备中...</a>
+                        </div>
                     </div>
-                    <p class="card-desc">基于 Vue 3 + Express 构建的效率型 WhatsApp 浏览器扩展。专注于跨境客户状态的精准监控与高效留存，红利期商户的降维打击利器。</p>
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-secondary">即将推出</a>
-                    </div>
+
                 </div>
             </section>
 
-            <!-- 时间防火墙 -->
             <section>
-                <h2 class="section-title">开发者服务声明</h2>
-                <div class="notice-box">
-                    <p>依据《纳瓦尔宝典》非线性时间变现的原则，俊迪（JD）在此明示以下合作守则：</p>
-                    <ul>
-                        <li><strong>不承接任何 1V1 定制化外包与雇佣开发</strong> —— 拒绝用个人时间换取线性收入。</li>
-                        <li><strong>不提供开源项目的免费技术支持与运行调试</strong> —— 所有常见问题请参见开源文档。</li>
-                        <li>如有系统架构级的商业授权合作、垂直行业解决方案采购或代理分销，欢迎联系：[你的商业微信/邮箱]。</li>
-                    </ul>
+                <div class="section-title">关于我们 & 合作说明</div>
+                <div class="statement-box">
+                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 500;">为保障产品的高频迭代与现有商业客户的交付质量，本实验室严格遵循以下协同机制：</p>
+                    <div class="statement-grid">
+                        <div class="statement-item">
+                            <h4>⚡ 自动化产品交付</h4>
+                            <p>所有技术底座与 Pro 版补丁均采用全自动自助发货机制，文档详尽，拒绝时间碎片化消耗。</p>
+                        </div>
+                        <div class="statement-item">
+                            <h4>🛑 不承接定制外包</h4>
+                            <p>我们保持极度克制的精力和聚焦，不接受任何形式的 1V1 劳务外包与雇佣化定制开发。</p>
+                        </div>
+                        <div class="statement-item">
+                            <h4>💼 商业授权与合作</h4>
+                            <p>如有系统架构级商业采购、特定行业解决方案落地或代理合作，欢迎联系：<span>contact@devjd.com</span></p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
 
         <footer>
-            <p>&copy; 2026 DevJD (JunDi). All Rights Reserved.</p>
+            <p>&copy; 2026 DevJD Labs. All Rights Reserved.</p>
         </footer>
     </div>
 </body>
