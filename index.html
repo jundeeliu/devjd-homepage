@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevJD | 俊迪的独立开发工作室</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #0f172a; color: #f8fafc; line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { margin-bottom: 60px; text-align: center; }
+        h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(to right, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .subtitle { color: #94a3b8; font-size: 1.1rem; }
+        .section-title { font-size: 1.4rem; color: #38bdf8; margin-bottom: 20px; border-left: 4px solid #38bdf8; padding-left: 12px; }
+        .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 24px; transition: border-color 0.3s; }
+        .card:hover { border-color: #4f46e5; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: #f1f5f9; }
+        .badge { background-color: #334155; color: #94a3b8; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+        .badge.active { background-color: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .card-desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 12px; }
+        .btn { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; text-decoration: none; text-align: center; }
+        .btn-primary { background-color: #4f46e5; color: #ffffff; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-secondary { background-color: #334155; color: #f1f5f9; }
+        .btn-secondary:hover { background-color: #475569; }
+        .notice-box { background-color: rgba(30, 41, 59, 0.5); border: 1px dashed #475569; border-radius: 12px; padding: 20px; margin-top: 40px; color: #94a3b8; font-size: 0.9rem; }
+        .notice-box ul { margin-left: 20px; margin-top: 8px; }
+        footer { margin-top: 60px; text-align: center; color: #64748b; font-size: 0.85rem; border-top: 1px solid #1e293b; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DevJD</h1>
+            <p class="subtitle">资深全栈工程师 · 俊迪的独立开发工作室</p>
+        </header>
+
+        <main>
+            <section style="margin-bottom: 40px;">
+                <h2 class="section-title">产品矩阵 & 数字化资产</h2>
+                
+                <!-- 核心：贸达思 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">贸达思 (Maodas)</div>
+                        <span class="badge active">旗舰产品</span>
+                    </div>
+                    <p class="card-desc">专为中小企业与 SOHO 跨境贸易打造的一体化管理系统。深度打通订单跟踪、Sales Order 生成及海外邮件追踪。坚持私有化部署底座，将 100% 数据主权完全归还企业。</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-primary">了解详情</a>
+                        <a href="https://demo.devjd.com" class="btn btn-secondary" target="_blank">系统演示</a>
+                    </div>
+                </div>
+
+                <!-- 流量池：若依优化版 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">RuoYi-Vue 深度优化生态版</div>
+                        <span class="badge">开源底座</span>
+                    </div>
+                    <p class="card-desc">针对企业级垂直落地、高并发业务场景深度定制的若依加强版。重构核心性能、补齐特定业务短板。作为本工作室所有商用产品（如贸达思）的底层架构底座。</p>
+                    <div class="btn-group">
+                        <a href="https://gitee.com" class="btn btn-primary" target="_blank">Gitee 开源版</a>
+                        <a href="#" class="btn btn-secondary">自助获取 Pro 商业版补丁</a>
+                    </div>
+                </div>
+
+                <!-- 工具：WA助手 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">WA 助手 (WAPlus)</div>
+                        <span class="badge">效率工具</span>
+                    </div>
+                    <p class="card-desc">基于 Vue 3 + Express 构建的效率型 WhatsApp 浏览器扩展。专注于跨境客户状态的精准监控与高效留存，红利期商户的降维打击利器。</p>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-secondary">即将推出</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 时间防火墙 -->
+            <section>
+                <h2 class="section-title">开发者服务声明</h2>
+                <div class="notice-box">
+                    <p>依据《纳瓦尔宝典》非线性时间变现的原则，俊迪（JD）在此明示以下合作守则：</p>
+                    <ul>
+                        <li><strong>不承接任何 1V1 定制化外包与雇佣开发</strong> —— 拒绝用个人时间换取线性收入。</li>
+                        <li><strong>不提供开源项目的免费技术支持与运行调试</strong> —— 所有常见问题请参见开源文档。</li>
+                        <li>如有系统架构级的商业授权合作、垂直行业解决方案采购或代理分销，欢迎联系：[你的商业微信/邮箱]。</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 DevJD (JunDi). All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
