@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>devjd.com — 数字化手艺人的数字花园</title>
+    <title>devjd.com — 一个写代码的独立开发者</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 字体整合：Inter & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- Lucide 图标 -->
+    <!-- Lucide 图标库 -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script>
+        // 重置 Tailwind 默认字体族，苹果系统优先使用苹方，Windows优先使用微软雅黑，无缝过渡且绝不混杂西文字体
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', '"微软雅黑"', 'sans-serif'],
+                        mono: ['-apple-system', 'BlinkMacSystemFont', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', '"微软雅黑"', 'sans-serif'],
                     },
                     colors: {
                         brand: {
-                            light: '#059669', // 翡翠绿 600
-                            dark: '#34d399',  // 翡翠绿 400
+                            light: '#059669', // 翡翠绿
+                            dark: '#34d399',
                         }
                     }
                 }
@@ -34,7 +31,12 @@
     </script>
     
     <style>
-        /* 现代极简滚动条 */
+        /* 强制全站所有元素（包含代码块、输入框、按钮等）统一字体，避免由于英文或特殊标记导致字体割裂 */
+        *, *::before, *::after, body, button, input, select, textarea, pre, code {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", sans-serif !important;
+        }
+
+        /* 极简滚动条 */
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -83,7 +85,7 @@
             letter-spacing: -0.01em;
         }
 
-        /* 随机分支艺术画布 */
+        /* 二维随机生长画布 */
         #plum-canvas {
             pointer-events: none;
             position: fixed;
@@ -108,7 +110,7 @@
     <!-- 交互式背景画布 -->
     <canvas id="plum-canvas"></canvas>
 
-    <!-- 全局通知轻量提醒框 -->
+    <!-- 全局轻量提醒框 -->
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
 
     <!-- 主体内容包装器 -->
@@ -116,12 +118,13 @@
         
         <!-- 导航头部 -->
         <header class="flex justify-between items-center mb-20">
-            <a href="#" onclick="navigate('home')" class="group flex items-center gap-2 font-mono text-xs tracking-widest font-bold text-zinc-900 dark:text-white">
+            <!-- 确保所有字号均大于或等于 14px (text-sm) -->
+            <a href="#" onclick="navigate('home')" class="group flex items-center gap-2 text-sm tracking-widest font-bold text-zinc-900 dark:text-white">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 group-hover:scale-125 transition-transform duration-300"></span>
                 devjd.com
             </a>
             
-            <nav class="flex items-center gap-5 text-xs font-sans">
+            <nav class="flex items-center gap-5 text-sm">
                 <a href="#" onclick="navigate('home')" data-tab="home" class="nav-link text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-150">首页</a>
                 <a href="#" onclick="navigate('projects')" data-tab="projects" class="nav-link text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-150">项目</a>
                 <a href="#" onclick="navigate('blog')" data-tab="blog" class="nav-link text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-150">博客</a>
@@ -131,11 +134,11 @@
                 <div class="h-3.5 w-[1px] bg-zinc-300 dark:bg-zinc-800"></div>
                 
                 <button onclick="toggleDarkMode()" class="text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors duration-150" title="切换深/浅色模式">
-                    <i data-lucide="sun" class="w-3.5 h-3.5 hidden dark:block"></i>
-                    <i data-lucide="moon" class="w-3.5 h-3.5 block dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
                 </button>
                 <button onclick="regenerateTree()" class="text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors duration-150" title="重新生长背景艺术">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
                 </button>
             </nav>
         </header>
@@ -146,13 +149,13 @@
         </main>
 
         <!-- 全局页脚 -->
-        <footer class="mt-28 pt-8 border-t border-zinc-200 dark:border-zinc-900/60 flex justify-between items-center text-[11px] text-zinc-400 dark:text-zinc-600 font-mono">
+        <footer class="mt-28 pt-8 border-t border-zinc-200 dark:border-zinc-900/60 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center text-sm text-zinc-400 dark:text-zinc-600">
             <div>
-                © 2026 devjd.com. 署名-非商业性使用-相同方式共享 4.0
+                © 2026 devjd.com. 记录一些工作与折腾的日常。
             </div>
             <div class="flex gap-4">
-                <span class="text-zinc-300 dark:text-zinc-800">|</span>
-                <span class="text-zinc-400 dark:text-zinc-600">务实的技术手艺人</span>
+                <span class="text-zinc-300 dark:text-zinc-800 hidden sm:inline">|</span>
+                <span class="text-zinc-400 dark:text-zinc-600">用心写好每一行代码</span>
             </div>
         </footer>
     </div>
@@ -164,46 +167,47 @@
         <div class="space-y-8">
             <section class="space-y-2">
                 <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white">JD (devjd)</h1>
-                <p class="text-zinc-400 dark:text-zinc-500 font-mono text-xs">软件开发工程师 / 务实独立开发者 / 数字化手艺人</p>
+                <p class="text-zinc-500 dark:text-zinc-400 text-sm">软件开发工程师 / 独立开发者</p>
             </section>
 
+            <!-- 调整了文本阅读大小至 text-[14.5px] 以上 -->
             <section class="prose prose-zinc dark:prose-invert leading-relaxed space-y-4 text-[14.5px] text-zinc-600 dark:text-zinc-300">
                 <p>
-                    你好，我是 <strong>JD</strong>。一名深耕行业多年的<strong>资深软件工程师</strong>与<strong>独立开发者</strong>。目前在一家教育机构致力于教务系统、消课计算以及核心数字化底座的研发。
+                    你好，我是 <strong>JD</strong>。一个写了很多年代码的开发，目前在一家教务机构工作，日常负责教务系统、消课计算以及核心业务系统的功能开发和维护。
                 </p>
                 <p>
-                    我是一个极其<strong>热衷于探索与动手折腾</strong>的人。相比于追逐宏大抽象的开源故事或纯概念技术，我更喜欢将精力倾注在最真实的物理世界里——去琢磨“如何用严密稳定的业务系统，解决具体行业的核心痛点”。
+                    我平时挺喜欢瞎折腾的，手头闲不下来。虽然不怎么参与大型开源项目，但我更愿意把精力放在用代码去解决身边的具体痛点上。相比于去追一些特别新潮、但可能很快就过时的技术概念，我更喜欢琢磨怎么把一个具体的业务逻辑理顺，让日常使用的系统更好用、更稳定。
                 </p>
                 <p>
-                    在我看来，一行代码的尊严，在于它被真实用户在具体业务流程中长年累月地高频叩击。从教务消课、全球外贸履约、工程成本把控，到助贷风控流转，我喜欢将复杂的行业流程梳理得干净利落，打磨出真正具备生产力美感的数字工具。
+                    在我看来，一个系统写得好不好，最实在的指标就是看它能不能切切实实地提高工作效率。不管是最开始的教务消课、全球外贸、工程成本，还是后来的助贷线索流转，我习惯把各种琐碎繁杂的流程打理得干干净净，做出真正好用、让人放心的工具。
                 </p>
             </section>
 
-            <!-- 核心领域标签 -->
-            <div class="flex flex-wrap gap-2 pt-2 text-xs font-mono">
-                <span class="text-zinc-400 dark:text-zinc-500">核心领域:</span>
-                <span class="text-emerald-600 dark:text-emerald-400">复杂业务建模</span>
+            <!-- 积累领域标签 -->
+            <div class="flex flex-wrap gap-2 pt-2 text-sm">
+                <span class="text-zinc-400 dark:text-zinc-500">平时的积累:</span>
+                <span class="text-emerald-600 dark:text-emerald-400">复杂业务逻辑梳理</span>
                 <span class="text-zinc-400 dark:text-zinc-500">/</span>
                 <span class="text-emerald-600 dark:text-emerald-400">核心工作流设计</span>
                 <span class="text-zinc-400 dark:text-zinc-500">/</span>
-                <span class="text-emerald-600 dark:text-emerald-400">高可靠数据架构</span>
+                <span class="text-emerald-600 dark:text-emerald-400">数据一致性处理</span>
             </div>
 
-            <!-- 核心信条 -->
+            <!-- 个人工作想法 -->
             <section class="pt-6 border-t border-zinc-100 dark:border-zinc-900/60">
-                <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-4">我的技术信条</h2>
-                <ul class="space-y-4 text-xs text-zinc-600 dark:text-zinc-400">
+                <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-4">我对写代码的一些看法</h2>
+                <ul class="space-y-4 text-sm text-zinc-600 dark:text-zinc-400">
                     <li class="flex items-start gap-3">
                         <span class="text-emerald-500 mt-1">✦</span>
-                        <span><strong>实用至上</strong> — 不为引入技术而引入。软件的首要使命是赋能商业效率，代码是精确落地、解决现实问题的工具。</span>
+                        <span><strong>实用为主</strong> — 解决问题是第一位的。技术说到底是工具，最重要的是能稳定落地，帮人解决麻烦。</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="text-emerald-500 mt-1">✦</span>
-                        <span><strong>敬畏复杂业务</strong> — 从不轻视中后台系统。消课核心链、外贸单据计算、接口防撞库机制……每一个细节都需要极高的架构稳定性与体验考究。</span>
+                        <span><strong>把日常逻辑做细</strong> — 很多后台系统的核心在于各种细节：课时扣减、多币种换算、防重提交等，这些细节都需要静下心来仔细推敲。</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="text-emerald-500 mt-1">✦</span>
-                        <span><strong>保持折腾</strong> — 真正的工程师，血液里总流淌着探路者的本能。在实操中发现盲区，在具体细分场景下做极致打磨。</span>
+                        <span><strong>保持动手的习惯</strong> — 遇到觉得有意思或者能提效的想法，习惯直接动手写出来，在反复的使用中不断去调整和完善。</span>
                     </li>
                 </ul>
             </section>
@@ -215,16 +219,16 @@
         <div class="space-y-10">
             <div>
                 <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white mb-2">项目作品</h1>
-                <p class="text-xs text-zinc-500 dark:text-zinc-400 font-mono">我主导设计、架构并完整编写的垂直行业管理系统与核心业务引擎。</p>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">这些年我独立设计并完整开发的几个垂直业务系统。</p>
             </div>
 
             <div class="space-y-12">
                 
-                <!-- 分类：重型业务系统 -->
+                <!-- 分类 -->
                 <div>
-                    <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-6 flex items-center gap-2">
+                    <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-6 flex items-center gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        垂直行业数字化引擎
+                        垂直业务系统开发
                     </h2>
                     
                     <div class="grid grid-cols-1 gap-6">
@@ -232,76 +236,76 @@
                         <!-- 卡片 1: 教务系统 -->
                         <div class="project-card border border-zinc-200/60 dark:border-zinc-900/80 bg-white/40 dark:bg-zinc-900/10 rounded-xl p-5 hover:border-emerald-500/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/30">
                             <div class="flex justify-between items-start mb-3">
-                                <span class="text-2xl" title="教育信息化综合系统">🎓</span>
-                                <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">线上运行中</span>
+                                <span class="text-2xl" title="教务管理系统">🎓</span>
+                                <span class="text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full">日常运行中</span>
                             </div>
-                            <h3 class="font-mono text-base font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                                教务数字化综合管理系统
+                            <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                                教务管理系统
                             </h3>
-                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                                面向教育机构的全链路信息化中枢。深度打通了<strong>学员生命周期、高并发课消计算、多形态缴费、电子合同（安全签署与存证）、复杂审批流程</strong>以及<strong>微信小程序端（家长与教师端）</strong>。搭载了精准的分销转介绍模块、精细的教师底薪与课消薪酬核算引擎，并通过数据看板实时提供多维经营状况。
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                                一套为教育机构做的完整系统。包含了学员日常管理、消课扣减、缴费退费、审批流程、电子合同签署、家长与老师微信小程序，以及用于核算老师课酬和进行经营数据分析的后台看板。
                             </p>
-                            <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-zinc-400">
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">高并发消课计算</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">电子合同签署</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">经营数据引擎</span>
+                            <div class="flex flex-wrap gap-2 mt-4 text-sm text-zinc-400">
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">学员与课时扣减</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">电子合同签署</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">课酬核算与看板</span>
                             </div>
                         </div>
 
                         <!-- 卡片 2: 外贸系统 -->
                         <div class="project-card border border-zinc-200/60 dark:border-zinc-900/80 bg-white/40 dark:bg-zinc-900/10 rounded-xl p-5 hover:border-emerald-500/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/30">
                             <div class="flex justify-between items-start mb-3">
-                                <span class="text-2xl" title="外贸供应链履约系统">🌐</span>
-                                <span class="text-[10px] font-mono text-zinc-400 bg-zinc-200/30 dark:bg-zinc-800/40 px-2 py-0.5 rounded-full">私有部署</span>
+                                <span class="text-2xl" title="外贸管理系统">🌐</span>
+                                <span class="text-sm text-zinc-400 bg-zinc-200/30 dark:bg-zinc-800/40 px-2.5 py-0.5 rounded-full">私有化部署</span>
                             </div>
-                            <h3 class="font-mono text-base font-medium text-zinc-900 dark:text-zinc-100">
-                                全球化外贸供应链管理系统
+                            <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">
+                                外贸管理系统
                             </h3>
-                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                                覆盖外贸全生命周期的协同工作站。对<strong>客户档案、智能询盘报价、商品数据库、采购合同、财务收付款核销</strong>进行了深度模型化管理。核心攻关了<strong>可视化拖拽单据模板引擎</strong>，实现极速生成高度合规的 PI（形式发票）和 CI（商业发票）等国际单据，完美解决多税率、跨地域多币种换算等复杂逻辑。
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                                覆盖外贸业务流程的管理软件。包含了客户资料、询盘报价、产品库、采购流程和收付款核销等功能。重点做了一个可以拖拽排版的单据生成器，方便业务员自定义配置并一键导出 PI、CI 等外贸单据。
                             </p>
-                            <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-zinc-400">
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">PI/CI单据渲染引擎</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">多币种高精度计算</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">自定义模板配置</span>
+                            <div class="flex flex-wrap gap-2 mt-4 text-sm text-zinc-400">
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">自定义单据排版</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">高精度多币种换算</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">采购与收付核销</span>
                             </div>
                         </div>
 
                         <!-- 卡片 3: 工程项目管理 -->
                         <div class="project-card border border-zinc-200/60 dark:border-zinc-900/80 bg-white/40 dark:bg-zinc-900/10 rounded-xl p-5 hover:border-emerald-500/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/30">
                             <div class="flex justify-between items-start mb-3">
-                                <span class="text-2xl" title="工程项目成本生命周期系统">🏗️</span>
-                                <span class="text-[10px] font-mono text-zinc-400 bg-zinc-200/30 dark:bg-zinc-800/40 px-2 py-0.5 rounded-full">私有部署</span>
+                                <span class="text-2xl" title="工程项目管理系统">🏗️</span>
+                                <span class="text-sm text-zinc-400 bg-zinc-200/30 dark:bg-zinc-800/40 px-2.5 py-0.5 rounded-full">私有化部署</span>
                             </div>
-                            <h3 class="font-mono text-base font-medium text-zinc-900 dark:text-zinc-100">
-                                工程项目全生命周期管控系统
+                            <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">
+                                工程项目管理系统
                             </h3>
-                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                                专注于精细化成本控制的工程项目系统。围绕<strong>工程总包合同、分包合同、资金往来（工程款收支）、材料设备采购、劳务记工及考勤、多级供应商分级评价</strong>，建立起实时的资金与物料流转看板。从根本上预防超付溢出，将项目预算、实际发生、预计结余实行三算对比监控。
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                                针对工程项目开发的成本控制系统。包括总包合同、分包合同、资金收付、材料采购、劳务考勤记工以及供应商分级评价等，提供实时的收支和材料看板，防止支出超限。
                             </p>
-                            <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-zinc-400">
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">预算/实际 三算控制</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">分包劳务流控</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">物料溯源管理</span>
+                            <div class="flex flex-wrap gap-2 mt-4 text-sm text-zinc-400">
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">预算与实际支出对照</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">劳务记工考勤</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">物料采购跟踪</span>
                             </div>
                         </div>
 
-                        <!-- 卡片 4: 金融助贷系统 -->
+                        <!-- 卡片 4: 助贷金融管理 -->
                         <div class="project-card border border-zinc-200/60 dark:border-zinc-900/80 bg-white/40 dark:bg-zinc-900/10 rounded-xl p-5 hover:border-emerald-500/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/30">
                             <div class="flex justify-between items-start mb-3">
-                                <span class="text-2xl" title="助贷客资及合伙人分发系统">📈</span>
-                                <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">线上运行中</span>
+                                <span class="text-2xl" title="助贷金融管理系统">📈</span>
+                                <span class="text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full">日常运行中</span>
                             </div>
-                            <h3 class="font-mono text-base font-medium text-zinc-900 dark:text-zinc-100">
-                                智能金融助贷与客资流转管理平台
+                            <h3 class="text-base font-medium text-zinc-900 dark:text-zinc-100">
+                                助贷金融管理系统
                             </h3>
-                            <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                                针对高敏感度客资处理的合规金融助贷系统。包含<strong>客资公海池策略、多租户撞库隔离检测（避免重复线索）、合伙人分发数据推送网关（安全脱敏、加密推送机制）、团队绩效实时看板</strong>。配套开发了面向外勤经理的便携式<strong>微信小程序端</strong>，大幅提升资产评估与客户跟进效率。
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
+                                一套处理客户资料与资源分配的金融助贷管理系统。支持客户公海、线索自动分发、业务跟进、合作伙伴数据推送（带脱敏和加密）以及微信小程序。系统里做了防重撞库匹配，避免多销售跟进同一客户。
                             </p>
-                            <div class="flex flex-wrap gap-2 mt-4 text-[10px] font-mono text-zinc-400">
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">撞库匹配算法</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">客资公海池分配</span>
-                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded">接口加密网关</span>
+                            <div class="flex flex-wrap gap-2 mt-4 text-sm text-zinc-400">
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">录入防重检测</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">公海线索分发</span>
+                                <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-0.5 rounded">数据脱敏对接</span>
                             </div>
                         </div>
 
@@ -315,58 +319,58 @@
     <template id="tpl-blog">
         <div class="space-y-10">
             <div>
-                <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white mb-2">架构笔记</h1>
-                <p class="text-sm text-zinc-500 dark:text-zinc-400 font-mono">我在垂直业务系统开发、重构和性能调优中整理的手艺人避坑指南。</p>
+                <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white mb-2">日常笔记</h1>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">平时在写代码、改Bug以及做系统开发中整理的一些日常记录。</p>
             </div>
 
             <!-- 博客文章列表 -->
             <div class="space-y-8">
                 <div>
-                    <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-6">2026年</h2>
+                    <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-6">2026年</h2>
                     <div class="space-y-6">
                         <article class="group cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2" onclick="openBlogPost('complex-edu-billing')">
                             <div class="flex items-center gap-3">
-                                <span class="text-xs font-mono text-zinc-400 w-12 shrink-0">6月8日</span>
-                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors font-sans text-[15px]">
-                                    教务消课系统设计：高频课消与财务精准扣减下的锁事务踩坑与实践
+                                <span class="text-sm text-zinc-400 w-16 shrink-0">6月8日</span>
+                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors text-[15px]">
+                                    教务消课系统开发：批量点名下的排他锁与并发扣减踩坑记录
                                 </h3>
                             </div>
-                            <span class="text-xs font-mono text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 8 分钟</span>
+                            <span class="text-sm text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 8 分钟</span>
                         </article>
 
                         <article class="group cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2" onclick="openBlogPost('trade-invoice-render')">
                             <div class="flex items-center gap-3">
-                                <span class="text-xs font-mono text-zinc-400 w-12 shrink-0">5月15日</span>
-                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors font-sans text-[15px]">
-                                    极致灵活：外贸供应链多税率环境下可视化 PI / CI 单据生成引擎实现方案
+                                <span class="text-sm text-zinc-400 w-16 shrink-0">5月15日</span>
+                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors text-[15px]">
+                                    外贸单据生成：如何做一个可以让业务员自己拖拽配置的 PI/CI 排版生成器
                                 </h3>
                             </div>
-                            <span class="text-xs font-mono text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 12 分钟</span>
+                            <span class="text-sm text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 12 分钟</span>
                         </article>
                     </div>
                 </div>
 
                 <div>
-                    <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-6">2025年</h2>
+                    <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-6">2025年</h2>
                     <div class="space-y-6">
                         <article class="group cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2" onclick="openBlogPost('loan-data-security')">
                             <div class="flex items-center gap-3">
-                                <span class="text-xs font-mono text-zinc-400 w-12 shrink-0">10月20日</span>
-                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors font-sans text-[15px]">
-                                    助贷金融体系下：客户公海池隔离策略与高秒级并发防撞库匹配算法架构
+                                <span class="text-sm text-zinc-400 w-16 shrink-0">10月20日</span>
+                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors text-[15px]">
+                                    助贷系统设计：公海客户资源流转机制与录入防重撞库的开发思路
                                 </h3>
                             </div>
-                            <span class="text-xs font-mono text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 10 分钟</span>
+                            <span class="text-sm text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 10 分钟</span>
                         </article>
 
                         <article class="group cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-2" onclick="openBlogPost('software-pragmatism')">
                             <div class="flex items-center gap-3">
-                                <span class="text-xs font-mono text-zinc-400 w-12 shrink-0">4月11日</span>
-                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors font-sans text-[15px]">
-                                    回归软件本质：为什么我拒绝纯学术技术狂热，偏爱垂直行业落地？
+                                <span class="text-sm text-zinc-400 w-16 shrink-0">4月11日</span>
+                                <h3 class="text-zinc-800 dark:text-zinc-200 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors text-[15px]">
+                                    写了多年代码的一些碎碎念：比起新技术，我为什么更在乎把业务逻辑理顺
                                 </h3>
                             </div>
-                            <span class="text-xs font-mono text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 6 分钟</span>
+                            <span class="text-sm text-zinc-400 pl-15 sm:pl-0 shrink-0">阅读需要 6 分钟</span>
                         </article>
                     </div>
                 </div>
@@ -379,54 +383,54 @@
         <div class="space-y-10">
             <div>
                 <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white mb-2">关于我</h1>
-                <p class="text-sm text-zinc-500 dark:text-zinc-400 font-mono">我的背景、核心技术栈以及联络方式。</p>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">我的日常、常用技术栈以及联系方式。</p>
             </div>
 
-            <!-- 个人简介与技术栈 -->
+            <!-- 个人简介 -->
             <div class="space-y-6 text-zinc-600 dark:text-zinc-300 text-[14.5px] leading-relaxed">
                 <p>
-                    我是 <strong>JD</strong>，一名深耕垂直行业多年的系统手艺人。
+                    我是 <strong>JD</strong>，一个写了多年代码的普通工程师。
                 </p>
                 <p>
-                    在我看来，软件开发是一门需要敬畏和沉淀的手艺。我极少在社区中高调活跃，因为我的主要精力都投入在“跟错综复杂的真实业务逻辑博弈”之中。设计一套经得起多维度穿透的权限树、编写一个防脏扣减的高精度消课流水，在我眼里，比引入一堆两周就会过时的边缘前端生态要更迷人，也更有工程分量。
+                    外界偶尔会对写代码时间长的人有一些各种各样的标签，但我自己觉得这个年纪积累下来的开发和业务经验，反而能让我更踏实、更冷静地去解决各种复杂系统中的麻烦事。我平时不太混迹于各类开源社区，更像是一个专注于把事情做好的执行者。对我来说，设计好一个权限体系、对齐一份高精度账目，比去追逐一些令人眼花缭乱的新概念要实在得多。
                 </p>
                 <p>
-                    我目前在一家教育机构，全面负责核心支撑系统的业务架构与日常演进。业余时间，我喜欢独立琢磨和开发一些实用的商业小产品。这不仅能让我保持最前沿的底层开发敏锐度，也能让我最切实、最自由地将技术想法直接变现为能够解决现实需求的数字化工具。
+                    目前我在一家教务机构负责核心系统的开发，日常要处理很多教务排课、消课核算的逻辑。平时闲下来时，我也喜欢自己折腾一些小项目，写点能帮自己或者别人解决具体问题的小工具。折腾代码对我来说既是工作，也是一件让我觉得心里踏实、乐在其中的事情。
                 </p>
 
-                <!-- 核心技术栈标签 -->
+                <!-- 技术栈标签 -->
                 <div class="pt-2">
-                    <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-3">核心技术栈</h2>
-                    <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-3">常写的技术栈</h2>
+                    <div class="flex flex-wrap gap-2 text-sm">
                         <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">Vue 3 / 组合式 API</span>
-                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">Nuxt 3 / 极速服务端渲染</span>
-                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">Node.js (NestJS / Bun 运行环境)</span>
+                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">Nuxt 3 / 服务端渲染</span>
+                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">Node.js (NestJS / Bun)</span>
                         <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">微信小程序全栈开发</span>
                         <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">PostgreSQL / Redis 数据库</span>
-                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">高精度高可靠数值计算引擎</span>
+                        <span class="bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1 rounded">高精度数值计算逻辑</span>
                     </div>
                 </div>
 
                 <!-- 联络卡片 -->
                 <div class="pt-8 border-t border-zinc-200 dark:border-zinc-900/60">
-                    <h2 class="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-4 flex items-center gap-2">
-                        <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                    <h2 class="text-sm tracking-widest text-zinc-400 uppercase mb-4 flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
                         联络与合作
                     </h2>
-                    <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
-                        如果你有复杂的业务系统需要梳理、重构或演进，亦或是想探讨高性价比的技术落地与轻量商业变现，欢迎随时通过邮件与我联系。
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+                        如果你在教务、外贸、工程或者助贷风控等系统上有业务逻辑需要梳理、优化或重构，或者想聊聊一些小工具的快速落地和打磨，随时欢迎给我写封邮件。
                     </p>
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-zinc-100/60 dark:bg-zinc-900/30 border border-zinc-200/60 dark:border-zinc-800/80 rounded-xl p-4">
                         <div class="flex-1">
-                            <span class="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 block mb-0.5">首选联络邮箱</span>
-                            <a href="mailto:hi@devjd.com" class="font-mono text-sm text-zinc-900 dark:text-zinc-100 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors font-medium">hi@devjd.com</a>
+                            <span class="text-sm text-zinc-400 dark:text-zinc-500 block mb-0.5">常用联系邮箱</span>
+                            <a href="mailto:hi@devjd.com" class="text-sm text-zinc-900 dark:text-zinc-100 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors font-medium">hi@devjd.com</a>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="copyEmailAddress()" class="flex-1 sm:flex-initial bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:bg-zinc-50 dark:hover:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300 font-mono text-xs px-3.5 py-2 rounded-lg transition-all flex items-center justify-center gap-1.5" title="复制邮箱地址">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> 复制
+                            <button onclick="copyEmailAddress()" class="flex-1 sm:flex-initial bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:bg-zinc-50 dark:hover:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300 text-sm px-3.5 py-2 rounded-lg transition-all flex items-center justify-center gap-1.5" title="复制邮箱地址">
+                                <i data-lucide="copy" class="w-4 h-4"></i> 复制
                             </button>
-                            <a href="mailto:hi@devjd.com" class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs px-3.5 py-2 rounded-lg transition-colors flex items-center justify-center gap-1.5">
-                                <i data-lucide="send" class="w-3.5 h-3.5"></i> 写信
+                            <a href="mailto:hi@devjd.com" class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 text-white text-sm px-3.5 py-2 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                                <i data-lucide="send" class="w-4 h-4"></i> 写信
                             </a>
                         </div>
                     </div>
@@ -439,15 +443,15 @@
     <template id="tpl-article-detail">
         <div class="space-y-6">
             <!-- 返回按钮 -->
-            <button onclick="navigate('blog')" class="group flex items-center gap-2 text-xs text-zinc-400 hover:text-emerald-500 transition-colors duration-150 mb-8 font-mono">
-                <i data-lucide="arrow-left" class="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform"></i>
+            <button onclick="navigate('blog')" class="group flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-500 transition-colors duration-150 mb-8">
+                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform"></i>
                 返回博客列表
             </button>
 
             <article class="prose prose-zinc dark:prose-invert max-w-none">
                 <header class="mb-10">
                     <h1 id="art-title" class="text-2xl font-semibold text-zinc-900 dark:text-white leading-tight mb-4"></h1>
-                    <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
+                    <div class="flex items-center gap-4 text-sm text-zinc-400">
                         <span id="art-date"></span>
                         <span>•</span>
                         <span id="art-reading"></span>
@@ -552,7 +556,7 @@
         }
 
         /**
-         * STREAMING_CHUNK: 初始化无刷新 SPA 路由管理...
+         * STREAMING_CHUNK: 初始化无刷新路由导航管理...
          */
         const routes = {
             'home': 'tpl-home',
@@ -625,14 +629,14 @@
             toast.className = 'flex flex-col p-4 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-lg rounded-xl pointer-events-auto transition-all duration-300 transform translate-y-4 opacity-0';
             toast.innerHTML = `
                 <div class="flex items-center gap-2 justify-between">
-                    <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+                    <span class="text-sm font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${title}
                     </span>
                     <button class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200" onclick="this.closest('.pointer-events-auto').remove()">
-                        <i data-lucide="x" class="w-3 h-3"></i>
+                        <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
-                ${description ? `<p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 font-mono">${description}</p>` : ''}
+                ${description ? `<p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">${description}</p>` : ''}
             `;
             container.appendChild(toast);
             lucide.createIcons();
@@ -666,64 +670,62 @@
         }
 
         /**
-         * STREAMING_CHUNK: 注入深度垂直行业的硬核文章数据...
+         * STREAMING_CHUNK: 注入去 AI 化的温润日常开发笔记数据...
          */
         const mockBlogs = {
             'complex-edu-billing': {
-                title: '教务消课系统设计：高频课消与财务精准扣减下的锁事务踩坑与实践',
+                title: '教务消课系统开发：批量点名下的排他锁与并发扣减踩坑记录',
                 date: '2026年6月8日',
                 reading: '阅读需要 8 分钟',
                 body: `
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">在教育信息化系统（Edu-ERP）中，“课消计算”绝非简单的减法，而是一套混杂了复杂物理规则、赠送规则与退费周期的强一致性高频账务计算。</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 业务并发痛点与脏扣减</h3>
-                    <p>当多个班级同时批量点名消课，或多端同时操作一个账户时，极易引发读写并发冲突。比如：学员账户仅剩 1 课时，却在并行的两个排课老师扣除中，被扣减为了 -1，发生脏扣减。这一问题本质上是读后写（Read-Then-Write）时序被击穿导致的。</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 数据库事务方案：排他锁还是 Redis 悲观锁？</h3>
-                    <p>在实践中，我们对学员核心合同账套引入了 <code>FOR UPDATE</code> 排他锁。但这在中大型机构高频并发考勤时会触发死锁。随后我们重构为<strong>“Redis 分布式锁限流 + 数据库乐观锁版本更新”</strong>，配合状态机幂等，极大减小了数据库事务粒度。</p>
-                    <div class="bg-zinc-100 dark:bg-zinc-900/60 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800/80 my-4 font-mono text-[11px]">
-                        // 悲观锁重入与防死锁扣除策略<br>
-                        String lockKey = "edu:member:lock:" + studentId;<br>
-                        boolean acquired = redis.setNxWithTimeout(lockKey, token, 3000);<br>
-                        if (acquired) {<br>
-                        &nbsp;&nbsp;// 校验版本并扣除学员可用合同课时<br>
-                        &nbsp;&nbsp;int updatedRows = db.update("UPDATE contracts SET hours = hours - ?, version = version + 1 WHERE id = ? AND version = ? AND hours >= ?", val, cId, ver, val);<br>
-                        }
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">在教育机构的排课考勤中，“消课”并不是个简单的减法，当多个班级同时点名，或者家长端、教师端并发操作系统时，很容易出现数据对不上的情况。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 为什么会出现课时扣多了？</h3>
+                    <p>如果学员账户只剩下 1 个课时，并行的两次点名同时读取到了这个余额，各自发起扣减，余额就会变成 -1。这种“读后再写”的时序问题在并发高的时候非常常见。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 排他锁与并发控制</h3>
+                    <p>之前我们直接使用了数据库排他锁，但在老师批量点名考勤、学生人数多的时候，锁的粒度太大，容易出现死锁报错。后来我们改用了<strong>“Redis 分布式锁限流 + 数据库版本号乐观锁”</strong>的方案。每次扣减课时前先去比对数据的版本号，这样既保证了不会多扣课时，也大幅降低了数据库的事务压力。</p>
+                    <div class="bg-zinc-100 dark:bg-zinc-900/60 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800/80 my-4 text-sm">
+                        // 简化的乐观锁课时扣减逻辑<br>
+                        UPDATE student_contracts <br>
+                        SET hours = hours - 1, version = version + 1 <br>
+                        WHERE id = 123 AND version = 5 AND hours >= 1;
                     </div>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">3. 阶梯赠课扣减顺位设计</h3>
-                    <p>扣减策略必须遵循精细的顺位逻辑：赠送课时与正式合同课时的扣减先后直接决定了机构退费时的折算难度。我们在底层引入了“消课优先级责任树”设计，每项消耗都会伴随流水追溯日志，确保账单100%可对账。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">3. 赠送课时与正式课时的扣减顺序</h3>
+                    <p>在实际业务中，赠送课时通常不退费，而正式课时是可以退费的。我们在代码里做了一套清晰的责任链路判定，先扣什么、后扣什么，每一笔消耗都伴随有一条流水分账记录，这样在财务对账或者退款时，就能一目了然。</p>
                 `
             },
             'trade-invoice-render': {
-                title: '极致灵活：外贸供应链多税率环境下可视化 PI / CI 单据生成引擎实现方案',
+                title: '外贸单据生成：如何做一个可以让业务员自己拖拽配置的 PI/CI 排版生成器',
                 date: '2026年5月15日',
                 reading: '阅读需要 12 分钟',
                 body: `
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">在涉外商贸中，形式发票（PI）与商业发票（CI）是海关申报和收汇的生命线。每个国家和客户要求的格式千差万别，如何设计一个零前端重构、让业务员自主编排的单据渲染引擎？</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 彻底的数据模型化解耦</h3>
-                    <p>我们没有将单据格式硬编码在任何一版组件中。我们将整个单据体系解构为一个嵌套的 JSON 描述结构，涵盖了：头部（寄送与出口信息）、商品列表（货物明细、高精度十进制高精计算）、尾部（结算条例与电子印章定位）。</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 可视化多模板引擎的研发</h3>
-                    <p>利用 Tailwind 渲染容器加原生的打印样式表媒体控制，实现即时可视化编辑。业务员调整单据边距、税率合并项，前端能够在一毫秒内无缝呈现实时印刷级预览，并且可以无缝调用虚拟打印机完成高清 A4 PDF 输出。</p>
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">在出口贸易里，发票（PI、CI）是用来申报和收汇的重要单据。不同国家和客户要求的格式千差万别，如果每次改版都要找程序员改代码，效率会非常低。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 数据与排版彻底分离</h3>
+                    <p>我们没有把单据格式写死在页面里，而是设计了一个描述单据结构的 JSON 数据。包含头部（公司抬头、买家地址）、货物品类列表（商品名称、高精度汇率和税率计算）以及底部（银行账号、备注条款）。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 拖拽编辑与虚拟打印</h3>
+                    <p>前端开发了一个可视化的拖拽排版区域，业务员在页面里自由调整各部分的边距和列宽。利用浏览器的原生打印样式控制，可以做到在屏幕上看到的排版和最终打印出来的 A4 PDF 效果一模一样，完美应对多税率、跨币种的数据对账。</p>
                 `
             },
             'loan-data-security': {
-                title: '助贷金融体系下：客户公海池隔离策略与高秒级并发防撞库匹配算法架构',
+                title: '助贷系统设计：公海客户资源流转机制与录入防重撞库的开发思路',
                 date: '2025年10月20日',
                 reading: '阅读需要 10 分钟',
                 body: `
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">助贷业务中客户资源不仅是绝对的商业机密，其分发和跟进效率也极大地考验着数据库并发设计。</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 公海池回收与防私占保护</h3>
-                    <p>公海池规定了限时跟进机制，到期自动释放。如果业务员通过边缘操作恶意拖延回收时间，会直接损害线索流转率。我们利用 Redis 过期事件队列加批处理任务（Batch Jobs），实现了精准、不可逆的强制自动化退回机制。</p>
-                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 秒级并发撞库检测与隔离算法</h3>
-                    <p>当多个助贷部门批量录入客资时，极易发生“同人被多部门跟进”产生的内讧（即撞库）。录入瞬间，核心校验层需要以微秒级速度，在千万级哈希索引中比对手机、身份脱敏段。我们通过 Redis 布隆过滤器（Bloom Filter）过滤，极大地减轻了直接命中物理表造成的性能滑坡。</p>
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">助贷业务中，客户资源的分发跟进和数据隔离是非常核心的要求，这也很考验中后台系统的数据隔离设计。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">1. 公海自动退回保护</h3>
+                    <p>公海池的规则通常是限时跟进，超时未联系就自动退回公海。为了防止销售利用投机行为“霸占”线索，我们在 Redis 中引入了过期事件监听，配合定时批量处理，实行强一致性的自动化退回。既公平，又保证了客户流转效率。</p>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-white mt-6 mb-2">2. 毫秒级防撞库匹配</h3>
+                    <p>为了防止多个销售部门录入同一个客户（撞库）引发矛盾，系统必须在录入的一瞬间对客户电话等高保密信息进行哈希脱敏匹配。我们在数据库前层放了一个基于 Redis 的布隆过滤器，用于过滤掉 99% 的未入库客户，极大地减轻了直接查物理表对系统性能带来的损耗。</p>
                 `
             },
             'software-pragmatism': {
-                title: '回归软件本质：为什么我拒绝纯学术技术狂热，偏爱垂直行业落地？',
+                title: '写了多年代码的一些碎碎念：比起新技术，我为什么更在乎把业务逻辑理顺',
                 date: '2025年4月11日',
                 reading: '阅读需要 6 分钟',
                 body: `
-                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">这是我写给自己的一篇务实技术信条总结。</p>
-                    <p>很多年轻开发者热衷于每天在社区讨论最新的框架版本，为一些看似精妙、实则对业务产出毫无作用的学术轮子而争吵不休。他们容易陷入‘为了使用技术而写软件’的自我感动中。</p>
-                    <p>而真正的现实痛点，往往藏在那些看似并不光鲜的传统中后台系统里。那里的账套有多深、那里的财务扣减逻辑有多绕、那里的用户对卡顿有多不能容忍。我越来越觉得：**构建一套让一个普通机构安稳运转五年、从不丢失一笔账目的业务系统，比在社交平台上刷一万个虚无的关注，要有厚重得多的工程价值。**</p>
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400 italic">这篇算是自己工作这么多年来的一点心得随笔，不是什么高深的技术论点，只是一点大实话。</p>
+                    <p>年轻的时候可能和很多刚入行的开发一样，每天都喜欢看社区里又出了什么新框架，或者为了一个看似精妙的新特性争执不休。那时候总觉得，用上最新、最酷的技术，写出来的代码才是高级的。</p>
+                    <p>但后来做过越来越多的中后台系统，见到了太多因为逻辑混乱导致的账目出错、因为并发设计不周导致的系统瘫痪，我才慢慢明白：<strong>写系统最难、也是最关键的地方，恰恰是把业务逻辑理顺。</strong></p>
+                    <p>你设计的一套好用的权限分配方案、一个高精度且对得上账的算薪模块，能让一家机构踏踏实实用上五年甚至十年，这里面所包含的价值，比在网络上追逐一些时髦词汇要实在得多。代码终归是用来解决具体问题的，稳重、好用、省心，这就是好代码的硬道理。</p>
                 `
             }
         };
